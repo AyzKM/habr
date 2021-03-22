@@ -38,3 +38,6 @@ def article(request, id):
         "article_page.html",
         {"article" : article }
         )
+
+def about(request):
+    return render(request, "about.html")

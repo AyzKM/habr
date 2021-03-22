@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('test/', homepage),
     # path("article/", first_article, name="first-article-page"),
-    path("articles/", articles, name='articles'),
+    path("", articles, name='articles'),
     path("authors/", authors, name='authors'),
-    path("article/<int:id>/", article, name='article')
+    path("article/<int:id>/", article, name='article'),
+    path("about/", about, name="about"),
 ]

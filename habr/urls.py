@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core.views import *
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +27,4 @@ urlpatterns = [
     path("authors/", authors, name='authors'),
     path("article/<int:id>/", article, name='article'),
     path("about/", about, name="about"),
-]
+]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

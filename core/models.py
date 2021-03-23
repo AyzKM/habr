@@ -22,6 +22,14 @@ class Article(models.Model):
         blank=True,
         )
 
+    views = models.IntegerField(default=0, verbose_name='Views')
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+        null = True,
+    )
+
+    updated_date = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
 

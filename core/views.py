@@ -33,6 +33,8 @@ def authors(request):
 
 def article(request, id):
     article = Article.objects.get(id=id)
+    article.views += 1
+    article.save()
     return render(
         request,
         "article_page.html",
@@ -41,3 +43,7 @@ def article(request, id):
 
 def about(request):
     return render(request, "about.html")
+
+def article_edit(request, pk):
+    article = Article.objects.get(id=pk)
+    return render(request, "article_edit.html", {"article": article})

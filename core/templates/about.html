@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    About website
+{% endblock %}
+
+{% block extra-script %}
+    <script src="{% static 'myscript.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-
     <h2>About us</h2>
+    {% block text %}
     <div>
         On Habr ​intelligent ​people ​share ​their ​unique ​experience.
         It will be equally ​interesting ​for both ​programmers ​and ​journalists, ​
@@ -10,5 +19,6 @@
         large ​companies ​and ​startups ​owners, ​and also ​for all ​those 
         ​who ​think ​that IT ​is not ​just ​two ​letters ​of the alphabet.  ​
     </div>
-
+    {% endblock %}
+    <button onclick="redColor">Перекрасить</button>
 {% endblock %}

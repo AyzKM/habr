@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+
     <h1>{{ article.title }}</h1>
     <div>{{ article.text }}</div>
-</body>
-</html>
+    <p>number of views {{ article.views }}</p>
+    <p>created date {{ article.created_date }}</p>
+    <p>updated date {{ article.updated_date }}</p>
+    <a href="{% url 'article-edit' article.id %}">Edit</a>
+   
+{% endblock %}

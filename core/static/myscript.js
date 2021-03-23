@@ -7,7 +7,7 @@ function changeColor() {
     element.style.color = "#00a329";
 }
 
-function redColor() {
-    const txt = document.querySelector("div");
-    txt.style.color = "red"
-}
+// function redColor() {
+//     const txt = document.querySelector("div");
+//     txt.style.color = "red"
+// }

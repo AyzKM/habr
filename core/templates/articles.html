@@ -11,5 +11,19 @@
         </a>  
         {% endfor %}
     </ol>
+    <form action="add_article/" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-primary">Add new article</button>
+    </form>
+    <!-- <div>
+        <form action="add_article/" method="POST">
+        {% csrf_token %}
+            <input type="text" name="title">
+            <br><br>
+            <textarea name="text" id="" cols="30" rows="10"></textarea>
+            <br><br>
+            <button>сохранить</button>
+        </form>
+    </div> -->
 
 {% endblock %}

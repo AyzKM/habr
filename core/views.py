@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from core.models import *
 
 # Create your views here.
@@ -31,7 +31,7 @@ def authors(request):
         {"authors": authors}
         )
 
-def article(request, id):
+def article_page(request, id):
     article = Article.objects.get(id=id)
     article.views += 1
     article.save()
@@ -46,4 +46,24 @@ def about(request):
 
 def article_edit(request, pk):
     article = Article.objects.get(id=pk)
+
+    if request.method == "POST":
+        article.title = request.POST.get("title")
+        article.text = request.POST.get("text")
+        article.save()
+        return redirect(article_page, pk)
     return render(request, "article_edit.html", {"article": article})
+
+def article_add(request):
+    if 'title' in request.POST and 'text' in request.POST: 
+        title = request.POST["title"]
+        text = request.POST["text"]
+        article = Article(title=title, text=text)
+        article.save()
+        return redirect(articles)
+    return render(
+        request, 
+        "article_add.html", 
+        )
+
+

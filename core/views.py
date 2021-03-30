@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.db.models import Q
 from core.models import *
 
 def articles(request):
@@ -74,5 +75,8 @@ def article_hide(request, id):
 
 def search(request):
     word = request.GET.get("word")
-    articles = Article.objects.filter(title__contains=word, is_active=True) #LIKE 
+    articles = Article.objects.filter(
+        Q(title__contains=word) | Q(text__icontains=word),
+        is_active=True
+    ) #LIKE 
     return render(request, "articles.html", {"articles":articles})

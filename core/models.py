@@ -32,6 +32,13 @@ class Article(models.Model):
 
     is_active = models.BooleanField(default=True)
 
+    picture = models.ImageField(
+        upload_to="articles_image", 
+        null=True, 
+        blank=True,
+        verbose_name="Article image"
+        )
+
     def __str__(self):
         return self.title
 

@@ -1,22 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from core.models import *
 
-# Create your views here.
-
-# def homepage(request):
-#     # return HttpResponse("<h2>Hello World</h2>")
-#     return render(request, "index.html")
-
-# def first_article(request):
-#     article = Article.objects.first()
-#     return render(
-#         request, 
-#         "article_page.html", 
-#         {"article" : article}
-#         )
-
 def articles(request):
-    articles = Article.objects.all()
+    articles = Article.objects.filter(is_active=True)
     return render(
         request,
         "articles.html",
@@ -59,6 +45,14 @@ def article_add(request):
         title = request.POST["title"]
         text = request.POST["text"]
         article = Article(title=title, text=text)
+        user = request.user
+
+        if not Author.objects.filter(user=user).exists():
+            author = Author(user=user, nickname=user.username)
+            author.save()
+
+        author = request.user.author
+        article.author = author
         article.save()
         return redirect(articles)
     return render(
@@ -67,3 +61,18 @@ def article_add(request):
         )
 
 
+def article_delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+    return HttpResponse("article succesfully has been deleted")
+
+def article_hide(request, id):
+    article = Article.objects.get(id=id)
+    article.is_active = False
+    article.save()
+    return redirect(articles)
+
+def search(request):
+    word = request.GET.get("word")
+    articles = Article.objects.filter(title__contains=word, is_active=True) #LIKE 
+    return render(request, "articles.html", {"articles":articles})

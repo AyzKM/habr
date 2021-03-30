@@ -8,6 +8,17 @@
     <p>number of views {{ article.views }}</p>
     <p>created date {{ article.created_date }}</p>
     <p>updated date {{ article.updated_date }}</p>
+    <p>
+        Author
+        <ul>
+            <li>Nickname - {{ article.author.nickname }}</li>
+            <li>Login - {{ article.author.user.username }}</li>
+        </ul>
+    </p>
     <a href="{% url 'article-edit' article.id %}">Edit</a>
+
+    <a href="{% url 'article-delete' article.id %}">delete article</a>
+    
+    <a href="{% url 'article-hide' article.id %}">hide article</a>
    
 {% endblock %}

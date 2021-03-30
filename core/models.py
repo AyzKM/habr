@@ -30,6 +30,8 @@ class Article(models.Model):
 
     updated_date = models.DateTimeField(auto_now=True)
 
+    is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return self.title
 

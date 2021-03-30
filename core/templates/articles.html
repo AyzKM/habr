@@ -11,10 +11,17 @@
         </a>  
         {% endfor %}
     </ol>
-    <form action="add_article/" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-sm btn-primary">Add new article</button>
-    </form>
+
+    <form method="POST">
+
+        {% csrf_token %}   
+<!--          
+        <button type="submit">
+            <a href="{% url 'article-add' %}">
+                Add new article
+            </a> 
+        </button>
+    </form> -->
     <!-- <div>
         <form action="add_article/" method="POST">
         {% csrf_token %}

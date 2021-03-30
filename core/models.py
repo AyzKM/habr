@@ -54,6 +54,12 @@ class Author(models.Model):
 
     nickname = models.CharField(max_length=55)
 
+    photo = models.ImageField(
+        upload_to="photo", 
+        null=True, 
+        blank=True
+    )
+
     class Meta:
         verbose_name = "Автор"
         verbose_name_plural = "Авторы"

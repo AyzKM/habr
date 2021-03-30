@@ -15,6 +15,12 @@
             <li>Login - {{ article.author.user.username }}</li>
         </ul>
     </p>
+
+    {% if article.picture %}
+        <img src="{{ article.picture.url }}" width="400px">  
+        <br>
+    {% endif %}
+
     <a href="{% url 'article-edit' article.id %}">Edit</a>
 
     <a href="{% url 'article-delete' article.id %}">delete article</a>

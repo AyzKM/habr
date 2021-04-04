@@ -72,6 +72,6 @@ class ArticleImage(models.Model):
     article = models.ForeignKey(
         to=Article, 
         on_delete=models.CASCADE,
-        related_name="articles",
+        related_name="images",
     )
     

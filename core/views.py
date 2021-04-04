@@ -88,3 +88,7 @@ def search(request):
         is_active=True
     ) #LIKE 
     return render(request, "articles.html", {"articles":articles})
+
+def top(request):
+    articles = Article.objects.filter(is_active=True).order_by("-views")[:3]
+    return render(request, "articles.html", {"articles": articles})

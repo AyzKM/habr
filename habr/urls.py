@@ -33,6 +33,7 @@ urlpatterns = [
     path("article/<int:id>/delete", article_delete, name='article-delete'),
     path("article/<int:id>/hide", article_hide, name='article-hide'),
     path("search/", search, name='search'),
+    path("top/", top, name="top"),
 
 ]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

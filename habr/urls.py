@@ -25,6 +25,7 @@ urlpatterns = [
     # path("article/", first_article, name="first-article-page"),
     path("", articles, name='articles'),
     path("authors/", authors, name='authors'),
+    path("author/<int:pk>/", author_page, name="author"),
     path("article/<int:id>/", article_page, name='article'),
     path("about/", about, name="about"),
     path("article/<int:pk>/edit/", article_edit, name='article-edit'),

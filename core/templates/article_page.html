@@ -6,6 +6,13 @@
     <h1>{{ article.title }}</h1>
     <div>{{ article.text }}</div>
     <p>number of views {{ article.views }}</p>
+    <p>viewed users {{ article.readers.all.count }}:
+        <ol>
+            {% for u in article.readers.all %}
+            <li>{{ u.username }}</li>
+            {% endfor %}
+        </ol>
+    </p>
     <p>created date {{ article.created_date }}</p>
     <p>updated date {{ article.updated_date }}</p>
     <p>
@@ -23,7 +30,7 @@
     {% for image in article.images.all %}
         <img src="{{ image.img.url }}" width="200px">
     {% endfor %}
-    
+
     <a href="{% url 'article-edit' article.id %}">Edit</a>
     <br>
     <a href="{% url 'article-delete' article.id %}">delete article</a>

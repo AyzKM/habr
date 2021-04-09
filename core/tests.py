@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse 
-from core.models import Article
+from .models import Article
+from .factories import ArticleFactory
 # Create your tests here.
 
 class HomepageTestCase(TestCase):
@@ -11,11 +12,16 @@ class HomepageTestCase(TestCase):
         self.assertContains(response, '10')
 
     def test_homepage_with_articles_success(self):
+        # n = 3
+        # for i in range(n):
+        #     article = Article()
+        #     article.title = f'test title{i}'
+        #     article.test = f'test text{i}'
+        #     article.save()
+        
         n = 3
         for i in range(n):
-            article = Article()
-            article.title = f'test title{i}'
-            article.test = f'test text{i}'
+            article = ArticleFactory()
             article.save()
 
         url = reverse('articles')

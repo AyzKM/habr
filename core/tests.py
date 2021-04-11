@@ -22,7 +22,6 @@ class HomepageTestCase(TestCase):
         url = reverse('articles')
         response = self.client.get(url)
         self.assertIn('articles', response.context)
-        print(article.title)
         articles = Article.objects.filter(is_active=True)
         self.assertEqual(articles.count(), n - 1)
 

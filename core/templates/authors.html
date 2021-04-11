@@ -7,7 +7,9 @@
     </h1>
     <ol>
         {% for author in authors %}
-        <li>{{ author.nickname }}</li>
+        <a href="{% url 'author' author.id %}">
+            <li>{{ author.nickname }}</li>
+        </a>
         {% endfor %}
     </ol>
 

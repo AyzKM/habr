@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.db.models import Q
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from core.models import *
 
 def sign_in(request):
@@ -12,8 +12,12 @@ def sign_in(request):
             if user.is_active:
                 login(request, user)
                 return redirect('articles')
-                
+
     return render(request, 'sign_in.html')
+
+def sign_out(request):
+    logout(request)
+    return redirect(sign_in)
 
 def articles(request):
     articles = Article.objects.filter(is_active=True)

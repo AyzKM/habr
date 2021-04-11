@@ -23,7 +23,9 @@
     <a href="{% url 'about' %}">About us</a> 
     <a href="{% url 'article-add' %}">Add new article</a> 
     --------------------------
-    <span>hello, {{ request.user.username }}</span>
+    {% if request.user.is_authenticated %}
+        <span>hello, {{ request.user.username }}</span>
+    {% endif %}
     <br>
     <form action="{% url 'search' %}">
         <input type="text" name="word">
@@ -31,7 +33,9 @@
     </form>
     <hr>
     {% if not request.user.is_authenticated %}
-        <a class="btn btn-info" href="{% url 'sign-in' %}">Log in</a>
+        <a class="btn btn-info" href="{% url 'sign-in' %}">Login</a>
+    {% else %}
+        <a class= "btn btn-info" href="{% url 'sign-out' %}">Logout</a>
     {% endif %}
 
     {% block content %}

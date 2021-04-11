@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse 
 from .models import Article
-from .factories import ArticleFactory
+from .factories import ArticleFactory, UserFactory
 # Create your tests here.
 
 class HomepageTestCase(TestCase):
@@ -28,3 +28,10 @@ class HomepageTestCase(TestCase):
         for article in articles:
             self.assertContains(response, article.title)
             self.assertContains(response, article.text)
+
+class loginTestCase(TestCase):
+    def test_login_success(self):
+        user = UserFactory()
+        url = reverse('sign-in')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 200)

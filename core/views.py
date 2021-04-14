@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from core.models import *
 
 def sign_in(request):
@@ -18,6 +19,24 @@ def sign_in(request):
 def sign_out(request):
     logout(request)
     return redirect(sign_in)
+
+def registration(request):
+    if request.method == "GET":
+        return render(request, 'registr.html')
+    elif request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password1")
+        password2 = request.POST.get("password2")
+        if password != password2:
+            return render(request, 'registr.html', {'message': 'passwords does not match!'})           
+        elif User.objects.filter(username=username).exists():
+           return render(request, 'registr.html', {'message': 'login is already used'})
+        else:
+            User.objects.create_user(
+                username=username,
+                password = password2
+            )
+            return redirect(sign_in)
 
 def articles(request):
     articles = Article.objects.filter(is_active=True)

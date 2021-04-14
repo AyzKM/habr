@@ -5,9 +5,11 @@ from .factories import ArticleFactory, UserFactory
 # Create your tests here.
 
 class HomepageTestCase(TestCase):
+    def setUp(self):
+        self.url = reverse('articles')
+
     def test_homepage_loads_success(self):
-        url = reverse('articles')
-        response = self.client.get(url)
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '10')
 
@@ -19,8 +21,7 @@ class HomepageTestCase(TestCase):
         article.is_active = False
         article.save()
 
-        url = reverse('articles')
-        response = self.client.get(url)
+        response = self.client.get(self.url)
         self.assertIn('articles', response.context)
         articles = Article.objects.filter(is_active=True)
         self.assertEqual(articles.count(), n - 1)
@@ -33,5 +34,5 @@ class loginTestCase(TestCase):
     def test_login_success(self):
         user = UserFactory()
         url = reverse('sign-in')
-        response = self.client.post(url)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

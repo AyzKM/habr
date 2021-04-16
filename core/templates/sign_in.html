@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Welcome to habr</h1>
-    <form method='POST'>
+{% extends 'layout.html' %}
+
+{% block auth %}
+    <form method="POST">
         {% csrf_token %}
-        <input type="text" placeholder="Login" name="username">
-        <input type="password" placeholder="password" name="password">
-        <button>Log in</button>
+        <div class="form-group">
+            <label for="username">Login:</label>
+            <input type="text" class="form-control" placeholder="login" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" placeholder="password" id="pwd" name="password">
+        </div>
+        <button class="btn btn-primary">Log in</button>
     </form>
-</body>
-</html>
+
+{% endblock %}

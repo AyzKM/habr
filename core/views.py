@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from core.models import *
 
 def sign_in(request):
@@ -87,11 +88,13 @@ def article_edit(request, pk):
         return redirect(article_page, pk)
     return render(request, "article_edit.html", {"article": article})
 
+@login_required(login_url='sign-in')
 def article_add(request):
     if 'title' in request.POST and 'text' in request.POST: 
         title = request.POST["title"]
         text = request.POST["text"]
-        article = Article(title=title, text=text)
+        picture = request.FILES.get("picture")
+        article = Article(title=title, text=text, picture=picture)
         user = request.user
 
         if not Author.objects.filter(user=user).exists():

@@ -54,9 +54,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'top' %}">Top 3</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'article-add' %}">Add new article</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>

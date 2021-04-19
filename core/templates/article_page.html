@@ -31,10 +31,12 @@
         <img src="{{ image.img.url }}" width="200px">
     {% endfor %}
 
-    <a href="{% url 'article-edit' article.id %}">Edit</a>
-    <br>
-    <a href="{% url 'article-delete' article.id %}">delete article</a>
-    <br>
-    <a href="{% url 'article-hide' article.id %}">hide article</a>
+    {% if request.user == article.author.user %}
+         <a class="btn btn-warning" href="{% url 'article-edit' article.id %}">Edit</a>
+         <br>
+         <a href="{% url 'article-delete' article.id %}">Delete</a>
+         <br>
+         <a href="{% url 'article-hide' article.id %}">Hide</a>
+     {% endif %}
    
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from core.models import *
 
 def sign_in(request):
@@ -80,6 +80,8 @@ def about(request):
 
 def article_edit(request, pk):
     article = Article.objects.get(id=pk)
+    if not request.user == article.author.user:
+        return HttpResponse('You do not have rights to edit')
 
     if request.method == "POST":
         article.title = request.POST.get("title")
@@ -110,11 +112,20 @@ def article_add(request):
         "article_add.html", 
         )
 
+def is_author(user):
+    if not user.is_authenticated:
+         return False
+    return Author.objects.filter(user=user).exists()
+
+
+@user_passes_test(is_author)
 def article_delete(request, id):
     article = Article.objects.get(id=id)
     article.delete()
     return HttpResponse("article succesfully has been deleted")
 
+
+@permission_required('core.change_article')
 def article_hide(request, id):
     article = Article.objects.get(id=id)
     article.is_active = False
@@ -132,3 +143,7 @@ def search(request):
 def top(request):
     articles = Article.objects.filter(is_active=True).order_by("-views")[:3]
     return render(request, "articles.html", {"articles": articles})
+
+class TestView:
+     def test_1(self):
+         return HttpResponse('test succeed!')

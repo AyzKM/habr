@@ -4,3 +4,4 @@ __pycache__/
 *.pyc 
 media/
 static/
+habr/settings.py

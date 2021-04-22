@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for article in articles %}
+        <a href="{% url 'article' article.id %}">
+            <h1>{{ article.title }}</h1>
+        </a>
+        <div>{{ article.text|linebreaks|truncatechars:20 }}</div>
+        <p>Views: {{ article.views }}</p>
+        <p>Author: {{ article.author }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}

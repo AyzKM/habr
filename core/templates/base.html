@@ -56,7 +56,10 @@
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'article-add' %}">Add new article</a>
+                    <a class="nav-link" href="{% url 'article-add'%}">HTML-form</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'article-form'%}">Django-form</a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
@@ -74,9 +77,11 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            <!-- <div class="col-lg-2 col-md-2 col-sm-12">
-                Side panel
-            </div> -->
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                {% block right_panel %}
+                    Side panel
+                {% endblock %}
+            </div>
         </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

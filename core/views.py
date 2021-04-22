@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from core.models import *
+from .forms import ArticleForm
+from .filters import ArticleFilter
 
 def sign_in(request):
     if request.method == "POST":
@@ -40,11 +42,11 @@ def registration(request):
             return redirect(sign_in)
 
 def articles(request):
-    articles = Article.objects.filter(is_active=True)
+    article_filter = ArticleFilter(request.GET, queryset=Article.objects.filter(is_active=True))
     return render(
         request,
         "articles.html",
-        {"articles" : articles}
+        {"article_filter" : article_filter}
     )
 
 def authors(request):
@@ -112,6 +114,18 @@ def article_add(request):
         "article_add.html", 
         )
 
+def article_form(request):
+    context = {}
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            article = form.save()
+            return redirect(article_page, article.id)
+    form = ArticleForm()
+    context['form'] = form
+    return render(request, 'form.html', context)
+
 def is_author(user):
     if not user.is_authenticated:
          return False
@@ -138,11 +152,11 @@ def search(request):
         Q(title__icontains=word) | Q(text__icontains=word),
         is_active=True
     ) #LIKE 
-    return render(request, "articles.html", {"articles":articles})
+    return render(request, "search.html", {"articles":articles})
 
 def top(request):
     articles = Article.objects.filter(is_active=True).order_by("-views")[:3]
-    return render(request, "articles.html", {"articles": articles})
+    return render(request, "top.html", {"articles": articles})
 
 class TestView:
      def test_1(self):

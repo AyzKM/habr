@@ -13,8 +13,8 @@
             {% endfor %}
         </ol>
     </p>
-    <p>created date {{ article.created_date }}</p>
-    <p>updated date {{ article.updated_date }}</p>
+    <p>created date {{ article.created_date|date:"d.m.Y" }}</p>
+    <p>updated date {{ article.updated_date|date:"d.m.Y" }}</p>
     <p>
         Author
         <ul>

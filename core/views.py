@@ -3,12 +3,13 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
-from django.views.generic import TemplateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView, DeleteView
 
-from core.models import *
+from .models import *
 from .forms import ArticleForm
 from .filters import ArticleFilter
-
+from .mixins import IsAuthorMixin
 
 def sign_in(request):
     if request.method == "POST":
@@ -134,13 +135,12 @@ def is_author(user):
          return False
     return Author.objects.filter(user=user).exists()
 
-
-@user_passes_test(is_author)
-def article_delete(request, id):
-    article = Article.objects.get(id=id)
-    article.delete()
-    return HttpResponse("article succesfully has been deleted")
-
+class DeleteArticleView(LoginRequiredMixin, IsAuthorMixin, TemplateView):
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        article = Article.objects.get(id=kwargs["id"])
+        article.delete()
+        return HttpResponse("article succesfully has been deleted")
 
 @permission_required('core.change_article')
 def article_hide(request, id):
@@ -161,7 +161,7 @@ def top(request):
     articles = Article.objects.filter(is_active=True).order_by("-views")[:3]
     return render(request, "top.html", {"articles": articles})
 
-class TopView(ListView):
+class TopView(LoginRequiredMixin, ListView):
     queryset = Article.objects.filter(is_active=True).order_by("-views")[:3]
     template_name = 'top.html'
 
